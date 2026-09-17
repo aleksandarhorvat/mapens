@@ -39,7 +39,7 @@ wandb/
 eval_results/
 *.log
 
-# Secrets (LLM API keys for labelling)
+# Secrets (tokens)
 .env
 .env.*
 !.env.example
@@ -83,3 +83,6 @@ desktop.ini
 
 # Vite temp config bundles
 *.timestamp-*.mjs
+
+# Labelling batches (contain message text)
+data/label_batches/

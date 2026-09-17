@@ -42,9 +42,9 @@ Implications:
 
 ```
 ---------- OFFLINE (scripts in /scripts, run once, outputs committed or in /data) ----------
-[B] viber.db -> export_messages.py -> data/messages.sqlite
+[B] viber.db -> export_messages.py -> data/messages.jsonl (committed) -> load_messages.py -> data/messages.sqlite
                  (clean, anonymize, dedupe, drop media/links)
-[B]   |--> llm_label.py -> data/labels_silver.jsonl   (~2000 msgs: class + location spans)
+[B]   |--> label_batches.py split -> Claude chat labels batches -> label_batches.py merge -> data/labels_silver.jsonl   (~2000 msgs)
 [B]   |      `--> train_classifier.py (Colab GPU) -> models/classifier/
 [A+B] `--> data/gold_test.jsonl  (150 msgs labelled BY HAND, never used for training)
 
@@ -92,13 +92,15 @@ Implications:
 | Backend | FastAPI + uvicorn | Single worker (PyLucene JVM + models loaded once). |
 | Frontend | React (Vite) + `react-leaflet` | OSM tiles. Fix default Leaflet marker icons under Vite, or use `CircleMarker`. |
 | Geo math | `shapely`, `pyproj` or plain haversine | Point-to-line distance for streets, intersections of street lines. |
-| Labelling | Any LLM API | Anonymize before sending. |
+| Labelling | Claude (chat app, no API) | Batches of ~150 messages pasted or read from `data/label_batches/`. Same prompt (`scripts/label_prompt.md`) for every batch. Anonymize before sending. |
 
 Torch in Docker: install the CPU wheel (`--index-url https://download.pytorch.org/whl/cpu`) to avoid multi-GB CUDA images.
 
 ## 6. Data contracts (DO NOT change without telling the other person)
 
-### 6.1 `data/messages.sqlite` - table `messages`
+### 6.1 `data/messages.jsonl` (committed) and `data/messages.sqlite` - table `messages`
+
+`export_messages.py` writes one JSON object per line with the fields below. `load_messages.py` loads them into the sqlite table with the same columns.
 
 | column | type | notes |
 |---|---|---|
@@ -295,8 +297,12 @@ mapens/
 |- models/                     (gitignored; classifier weights)
 |- scripts/
 |  |- export_messages.py       [B]
-|  |- llm_label.py             [B]
-|  |- train_classifier.ipynb   [B]  (Colab)
+|  |- label_batches.py         [B]  split messages into batches, merge + validate labelled batches
+|  |- label_prompt.md          [B]  fixed labelling prompt used for every Claude batch
+|  |- train_classifier.ipynb   [B]  (Colab; notes in train_classifier.md)
+|  |- load_messages.py         [A]  messages.jsonl -> messages.sqlite
+|  |- check_style.py           [A+B] writing style check (section 14)
+|  |- setup.sh                 [A]  rebuilds files that are not in git
 |  |- build_gazetteer.py       [A]
 |  |- index_gazetteer.py       [A]
 |  `- eval.py                  [A: geo part, B: NLP part]
@@ -338,8 +344,8 @@ Temporary mocks A may use: `classify()` = keyword rules; `extract()` = dictionar
 
 ### Person B - NLP / data / frontend
 
-1. `export_messages.py` (inspect `viber.db`, clean, anonymize, dedupe -> `messages.sqlite`).
-2. `llm_label.py` (batch labelling to `labels_silver.jsonl`; spot-check 50).
+1. `export_messages.py` (inspect `viber.db`, clean, anonymize, dedupe -> `messages.jsonl`).
+2. Labelling with Claude (no API): `label_batches.py split` writes `data/label_batches/batch_NNN.jsonl`; label each batch in Claude with `scripts/label_prompt.md`; save answers as `batch_NNN.labels.jsonl`; `label_batches.py merge` validates (ids, labels, span offsets) and writes `labels_silver.jsonl`. Spot-check 50.
 3. `train_classifier.ipynb` on Colab -> `models/classifier/`; report metrics.
 4. `normalize.py`, `classify.py`, `extract.py` (NER + dictionary matcher + merge rule).
 5. React + Leaflet frontend (first against mock JSON matching section 6.6, then real API).
@@ -376,7 +382,7 @@ Temporary mocks B may use: static `mock_events.json` in the shape of `GET /event
 - Viber timestamps are ms; Python `datetime.fromtimestamp` expects seconds.
 - Replay must drive a simulated `now`; all "last 60 minutes" logic uses simulated time, not wall clock.
 - Leaflet in Vite: import `leaflet/dist/leaflet.css`; default marker icons break - use `CircleMarker`.
-- Don't send non-anonymized messages to external LLM APIs; don't commit `viber.db`.
+- Don't send non-anonymized messages to Claude or any other LLM; don't commit `viber.db`.
 - Evaluate only on `gold_test.jsonl`; exclude those ids from training.
 
 ## 11. Rules for the AI assistant
