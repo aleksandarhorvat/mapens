@@ -1,6 +1,6 @@
 """Lucene indexes for events and messages. Owner: Person A.
 
-Field design: MAPENS_CONTEXT.md §7 ("Lucene indexes").
+Field design: MAPENS_CONTEXT.md section 7 ("Lucene indexes").
 Check `lucene.VERSION` inside the container before writing API calls.
 """
 from typing import Optional

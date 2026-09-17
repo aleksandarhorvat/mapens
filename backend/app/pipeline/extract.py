@@ -1,5 +1,5 @@
-"""Stage 2 — location extraction: bcms-bertic-ner ∪ gazetteer/alias matcher + merge rule.
-Owner: Person B. See MAPENS_CONTEXT.md §7.
+"""Stage 2 - location extraction: bcms-bertic-ner + gazetteer/alias matcher + merge rule.
+Owner: Person B. See MAPENS_CONTEXT.md section 7.
 """
 from app.pipeline.types import Mention
 

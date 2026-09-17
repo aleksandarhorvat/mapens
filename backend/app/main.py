@@ -1,4 +1,4 @@
-"""FastAPI app. Owner: Person A. API contract: MAPENS_CONTEXT.md §6.6.
+"""FastAPI app. Owner: Person A. API contract: MAPENS_CONTEXT.md section 6.6.
 
 Endpoints are declared with the agreed shapes; unimplemented ones return 501.
 Models and Lucene are loaded once in `lifespan` (single uvicorn worker).

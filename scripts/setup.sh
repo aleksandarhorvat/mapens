@@ -11,7 +11,7 @@ MODELS_DIR="${MODELS_DIR:-models}"
 step() {  # step <description> <command...>
   local desc="$1"; shift
   echo "==> $desc"
-  "$@" || echo "WARN: '$desc' failed or not implemented yet — continuing"
+  "$@" || echo "WARN: '$desc' failed or not implemented yet - continuing"
 }
 
 # 1. Fine-tuned classifier from Hugging Face
@@ -26,7 +26,7 @@ fi
 
 # 2. Pretrained models (bcms-bertic-ner, embedic) download on first use into HF_HOME
 
-# 3. Messages: messages.jsonl → messages.sqlite
+# 3. Messages: messages.jsonl -> messages.sqlite
 if [ -f "$DATA_DIR/messages.jsonl" ] && [ ! -f "$DATA_DIR/messages.sqlite" ]; then
   step "Load messages into sqlite" python scripts/load_messages.py
 fi

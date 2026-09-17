@@ -1,4 +1,4 @@
-"""Shared pipeline types. Owners: Person A + B. Contract: MAPENS_CONTEXT.md §6.4.
+"""Shared pipeline types. Owners: Person A + B. Contract: MAPENS_CONTEXT.md section 6.4.
 Do not change without telling the other person and updating the context file.
 """
 from dataclasses import dataclass, field
@@ -39,7 +39,7 @@ class Candidate:
 @dataclass
 class Resolved:
     mentions: list[Mention]
-    candidate: Optional[Candidate]   # None → unresolved
+    candidate: Optional[Candidate]   # None -> unresolved
     lat: Optional[float]
     lon: Optional[float]
     confidence: float

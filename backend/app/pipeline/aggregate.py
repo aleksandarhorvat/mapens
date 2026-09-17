@@ -1,5 +1,5 @@
-"""Stage 4 — merge reports into events, handle "clear", TTL. Owner: Person A.
-See MAPENS_CONTEXT.md §7.
+"""Stage 4 - merge reports into events, handle "clear", TTL. Owner: Person A.
+See MAPENS_CONTEXT.md section 7.
 """
 from typing import Optional
 

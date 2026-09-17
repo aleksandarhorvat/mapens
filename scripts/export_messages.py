@@ -1,4 +1,4 @@
-"""viber.db (data/raw) → clean, anonymized data/messages.jsonl (§6.1). Inspect the real schema first.
+"""viber.db (data/raw) -> clean, anonymized data/messages.jsonl (section 6.1). Inspect the real schema first.
 
 Owner: Person B. See MAPENS_CONTEXT.md.
 Run: python scripts/export_messages.py

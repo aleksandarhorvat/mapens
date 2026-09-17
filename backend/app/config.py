@@ -21,13 +21,13 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "djovak/embedic-large")
 # Novi Sad bounding box (south, west, north, east)
 NOVI_SAD_BBOX = (45.20, 19.72, 45.32, 19.95)
 
-# Stage 3 — geo-resolution
+# Stage 3 - geo-resolution
 RETRIEVAL_K = 10
 RRF_K = 60
 GEO_CONFIDENCE_THRESHOLD = 0.35   # tune on gold_test.jsonl
 PAIR_MAX_DISTANCE_M = 800
 
-# Stage 4 — aggregation
+# Stage 4 - aggregation
 MERGE_DISTANCE_M = 300
 MERGE_WINDOW_MIN = 20
 CLEAR_DISTANCE_M = 500

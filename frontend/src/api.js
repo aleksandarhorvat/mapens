@@ -1,4 +1,4 @@
-// API client. Contract: MAPENS_CONTEXT.md §6.6. Owner: Person B.
+// API client. Contract: MAPENS_CONTEXT.md section 6.6. Owner: Person B.
 // Set USE_MOCK = false once the backend endpoints are implemented.
 import mockEvents from './mock/events.json'
 

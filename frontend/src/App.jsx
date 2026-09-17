@@ -8,7 +8,7 @@ const NOVI_SAD = [45.2551, 19.8452]
 
 export default function App() {
   const [events, setEvents] = useState([])
-  const [backend, setBackend] = useState('checking…')
+  const [backend, setBackend] = useState('checking...')
 
   useEffect(() => {
     getHealth().then(() => setBackend('ok')).catch(() => setBackend('unreachable'))
@@ -18,7 +18,7 @@ export default function App() {
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', fontFamily: 'system-ui' }}>
       <header style={{ padding: '8px 12px', borderBottom: '1px solid #ddd' }}>
-        <b>MapeNS</b> · backend: {backend} {USE_MOCK && '· mock data'}
+        <b>MapeNS</b> | backend: {backend} {USE_MOCK && ', mock data'}
       </header>
       <MapContainer center={NOVI_SAD} zoom={13} style={{ flex: 1 }}>
         <TileLayer
@@ -37,7 +37,7 @@ export default function App() {
             }}
           >
             <Popup>
-              <b>{e.type}</b> — {e.location_name}<br />
+              <b>{e.type}</b> - {e.location_name}<br />
               {e.report_count} report(s), {e.age_min} min ago
             </Popup>
           </CircleMarker>

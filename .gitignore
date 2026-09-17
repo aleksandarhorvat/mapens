@@ -1,6 +1,5 @@
-# ─── MapeNS ───────────────────────────────────────────────
-
-# Raw data — NEVER commit (all chats, contacts, phone numbers)
+# MapeNS
+# Raw data - NEVER commit (all chats, contacts, phone numbers)
 data/raw/
 *.db
 *.db-journal
@@ -8,7 +7,7 @@ data/raw/
 *.db-shm
 viber*.db
 
-# Derived data — rebuilt from data/messages.jsonl and scripts
+# Derived data - rebuilt from data/messages.jsonl and scripts
 data/*.sqlite
 data/*.sqlite3
 data/lucene/
@@ -46,7 +45,7 @@ eval_results/
 !.env.example
 *.key
 
-# ─── Python ───────────────────────────────────────────────
+# Python
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -58,7 +57,7 @@ env/
 .ruff_cache/
 .ipynb_checkpoints/
 
-# ─── Node / React (Vite) ─────────────────────────────────
+# Node / React (Vite)
 node_modules/
 frontend/dist/
 frontend/.vite/
@@ -67,14 +66,14 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# ─── Java / PyLucene build leftovers ─────────────────────
+# Java / PyLucene build leftovers
 *.class
 hs_err_pid*.log
 
-# ─── Docker ──────────────────────────────────────────────
+# Docker
 docker-compose.override.yml
 
-# ─── Editors / OS ────────────────────────────────────────
+# Editors / OS
 .vscode/
 .idea/
 *.swp
