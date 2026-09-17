@@ -1,0 +1,83 @@
+# ─── MapeNS ───────────────────────────────────────────────
+
+# Raw data — NEVER commit (all chats, contacts, phone numbers)
+data/raw/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+viber*.db
+
+# Derived data — rebuilt from data/messages.jsonl and scripts
+data/*.sqlite
+data/*.sqlite3
+data/lucene/
+data/gazetteer_vectors.npy
+data/cache/
+data/overpass_raw*.json
+
+# Committed on purpose (listed here for clarity, not ignored):
+#   data/messages.jsonl        (anonymized export)
+#   data/gazetteer.json
+#   data/aliases.json
+#   data/labels_silver.jsonl
+#   data/gold_test.jsonl
+
+# Models and Hugging Face cache (large; trained on Colab / downloaded)
+models/
+hf-cache/
+.cache/huggingface/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+checkpoints/
+runs/
+wandb/
+
+# Evaluation outputs (keep final tables in the report instead)
+eval_results/
+*.log
+
+# Secrets (LLM API keys for labelling)
+.env
+.env.*
+!.env.example
+*.key
+
+# ─── Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ─── Node / React (Vite) ─────────────────────────────────
+node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Java / PyLucene build leftovers ─────────────────────
+*.class
+hs_err_pid*.log
+
+# ─── Docker ──────────────────────────────────────────────
+docker-compose.override.yml
+
+# ─── Editors / OS ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
