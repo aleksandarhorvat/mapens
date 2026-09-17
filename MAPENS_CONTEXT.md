@@ -286,7 +286,12 @@ mapens/
 ├─ MAPENS_CONTEXT.md          ← this file
 ├─ PROGRESS.md                ← each person appends what they finished (see §12)
 ├─ docker-compose.yml          [A]
-├─ data/                       (gitignored: viber.db, messages.sqlite, lucene/; committed: gazetteer.json, aliases.json, gold_test.jsonl)
+├─ data/
+│  ├─ raw/viber.db             (NEVER committed — shared privately; contains all chats, contacts, phone numbers)
+│  ├─ messages.jsonl           (committed: anonymized, traffic groups only — output of export_messages.py)
+│  ├─ messages.sqlite          (gitignored: rebuilt from messages.jsonl on startup/first run)
+│  ├─ lucene/                  (gitignored: rebuilt by scripts)
+│  └─ gazetteer.json, aliases.json, labels_silver.jsonl, gold_test.jsonl  (committed)
 ├─ models/                     (gitignored; classifier weights)
 ├─ scripts/
 │  ├─ export_messages.py       [B]
