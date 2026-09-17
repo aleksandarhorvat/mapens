@@ -1,0 +1,11 @@
+# torch is installed separately in the Dockerfile (CPU wheel)
+# After the first successful build, pin versions with: pip freeze
+fastapi
+uvicorn[standard]
+pydantic>=2
+transformers
+sentence-transformers
+huggingface_hub
+numpy
+shapely
+python-dotenv

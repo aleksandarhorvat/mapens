@@ -418,3 +418,18 @@ Current problems / errors:
 - Contract changes: none | <describe>
 - Notes for the other person: ...
 ```
+
+---
+
+## 13. Repo setup (already done — Day 0)
+
+The skeleton exists; every module in §8 is a stub with the agreed signature that raises `NotImplementedError`. Fill in only your own files.
+
+- **Run everything:** `cp .env.example .env` then `docker compose up --build`. API on http://localhost:8000 (`/health` works, other endpoints return 501 until implemented), UI on http://localhost:5173.
+- **Frontend dev:** `cd frontend && npm install && npm run dev`. The frontend calls the backend through the **`/api` prefix** (Vite proxy in dev, nginx in Docker) — never hard-code `localhost:8000`. `src/api.js` has `USE_MOCK = true` and serves `src/mock/events.json` until the real API exists.
+- **Backend code** is mounted into the container (`./backend/app`, `./scripts`); restart the backend container to pick up changes.
+- **Not in git, rebuilt automatically** by `scripts/setup.sh` (run on backend start): `models/classifier` (downloaded from Hugging Face repo in `CLASSIFIER_REPO`), `data/messages.sqlite` (from `messages.jsonl` via `scripts/load_messages.py`), `data/lucene/` + `data/gazetteer_vectors.npy` (via `scripts/index_gazetteer.py`). Pretrained NER/embedding models download on first use into the `hf-cache` volume. A step that fails only prints a warning, so the API still starts while modules are stubs.
+- **Classifier sharing:** after training, Person B runs `hf auth login` and `hf upload <hf-username>/mapens-classifier models/classifier .`, then sets `CLASSIFIER_REPO` in `.env.example`.
+- **Raw data:** `viber.db` goes in `data/raw/` (gitignored, shared privately). Only the anonymized `data/messages.jsonl` is committed.
+- **Tunable parameters** (thresholds, distances, TTLs, bbox) live in `backend/app/config.py`.
+- **Line endings:** `.gitattributes` forces LF for `.sh`, `.py`, Dockerfiles — required because the repo is edited on Windows but runs in Linux containers.

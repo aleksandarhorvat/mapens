@@ -1,0 +1,11 @@
+{
+  "now": 1726570800000,
+  "events": [
+    {"id": "e1", "type": "patrol", "lat": 45.2461, "lon": 19.8412, "first_ts": 1726569000000, "last_ts": 1726570200000,
+     "report_count": 3, "status": "active", "ttl_min": 60, "message_ids": [1, 4, 9], "location_name": "Mercator, Bulevar oslobođenja", "age_min": 10},
+    {"id": "e2", "type": "accident", "lat": 45.2551, "lon": 19.8452, "first_ts": 1726569600000, "last_ts": 1726569600000,
+     "report_count": 1, "status": "active", "ttl_min": 90, "message_ids": [5], "location_name": "Futoška × Bulevar oslobođenja", "age_min": 20},
+    {"id": "e3", "type": "jam", "lat": 45.2477, "lon": 19.8639, "first_ts": 1726569300000, "last_ts": 1726569900000,
+     "report_count": 2, "status": "active", "ttl_min": 30, "message_ids": [2, 7], "location_name": "Most slobode", "age_min": 15}
+  ]
+}
